@@ -38,7 +38,7 @@ angular.module('Cloudfader', ['rzModule'])
   $scope.query = 'Robyn';
 
   $scope.$watch('query', function(newVal, oldVal) {
-  	$scope.search($scope.query);
+  	if ($scope.query !== '') { $scope.search($scope.query) }
   }, true)
 
   $scope.search = function(query) {
