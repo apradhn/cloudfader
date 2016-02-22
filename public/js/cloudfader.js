@@ -83,7 +83,7 @@ angular.module('Cloudfader', ['rzModule'])
   }
 
   $scope.play = function(deck, track) {
-  	$scope.embed(deck, track, {auto_play: true})
+  	$scope.embed(deck, track, {auto_play: true, single_active: false})
   	$scope.removeFromQueue(deck, track);
   }
 
