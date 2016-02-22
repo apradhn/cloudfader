@@ -1,6 +1,6 @@
 html(ng-app="Cloudfader")
 	head
-		title Cloudfader
+		title CloudFader
 		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Open+Sans")
 		link(rel="stylesheet", href="css/cloudfader.css")
 		script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js")
@@ -16,10 +16,12 @@ html(ng-app="Cloudfader")
 			});
 	body(ng-controller="CloudfaderController")
 		.row
-			h1 Cloudfader
+			h1 CloudFader
+		.row
+			a(href="http://github.com/apradhn/cloudfader") Github
+		.row
 			a(href="http://soundcloud.com" target="_blank")
 				img(src="img/soundcloud_logo.png")
-
 		.row
 			//- Deck A
 			.small-4.columns.deck#deck-a
