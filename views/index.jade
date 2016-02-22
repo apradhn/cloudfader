@@ -52,7 +52,7 @@ html(ng-app="Cloudfader")
 						form(ng-submit="search(query)").small-10.small-offset-1
 							.row
 								.input-group
-									input.input-group-field(type="text", ng-model='query', name='query', placeholder='Search SoundCloud')
+									input.input-group-field(type="text", ng-model='query', name='query', placeholder='Search SoundCloud', ng-model-options="{debounce: 500}")
 									.input-group-button
 										input.button.hollow(type="submit", value="Search", ng-click="search(query)")
 					.search-results

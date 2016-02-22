@@ -35,16 +35,22 @@ angular.module('Cloudfader', ['rzModule'])
   	}
   }
 
+  $scope.query = 'Robyn';
+
+  $scope.$watch('query', function(newVal, oldVal) {
+  	$scope.search($scope.query);
+  }, true)
+
   $scope.search = function(query) {
   	$scope.searchResults = [];
 		SC.get('/tracks', {
 			q: query, embeddable_by: 'all'
 		}).then(function(tracks) {
+			console.log(tracks);
 			angular.forEach(tracks, function(track) {
 				if (track.embeddable_by === 'all') { $scope.searchResults.push(track) }
 			})
 			$scope.$apply();
-			console.log($scope.searchResults);
 		})
   }
 
