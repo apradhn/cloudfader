@@ -1,15 +1,14 @@
-// TODO: Add directive for iframe onload event
 angular.module('Cloudfader', ['rzModule'])
 .controller('CloudfaderController', ['$scope', '$sce', function($scope, searchTitle, $sce) {
 
   $scope.deckA = {
-  	html: '<iframe onload="initializeWidget(1)" width="100%" height="400" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F110730099&show_artwork=true&single_active=false"></iframe>',
+  	html: '<iframe onload="initializeWidget(1)" width="100%" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F110730099&show_artwork=true&single_active=false"></iframe>',
   	queue: [],
   	searchResults: [],
   }
 
   $scope.deckB = {
-  	html: '<iframe onload="initializeWidget(2)" width="100%" height="400" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F32850380&show_artwork=true&single_active=false"></iframe>',
+  	html: '<iframe onload="initializeWidget(2)" width="100%" height="300" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F32850380&show_artwork=true&single_active=false"></iframe>',
   	queue: [],
   	searchResults: [],
   }
@@ -36,16 +35,16 @@ angular.module('Cloudfader', ['rzModule'])
   	}
   }
 
-  $scope.search = function(deck, query) {
-  	deck.searchResults = [];
+  $scope.search = function(query) {
+  	$scope.searchResults = [];
 		SC.get('/tracks', {
 			q: query, embeddable_by: 'all'
 		}).then(function(tracks) {
 			angular.forEach(tracks, function(track) {
-				if (track.embeddable_by === 'all') { deck.searchResults.push(track) }
+				if (track.embeddable_by === 'all') { $scope.searchResults.push(track) }
 			})
 			$scope.$apply();
-			// console.log(deck.searchResults);
+			console.log($scope.searchResults);
 		})
   }
 
@@ -75,6 +74,11 @@ angular.module('Cloudfader', ['rzModule'])
 			$scope.$apply();
 			$scope.embed(deck, track, {auto_play: true, single_active: false})
 		}
+  }
+
+  $scope.play = function(deck, track) {
+  	$scope.embed(deck, track, {auto_play: true})
+  	$scope.removeFromQueue(deck, track);
   }
 
   window.initializeWidget = function(int) {

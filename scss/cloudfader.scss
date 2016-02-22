@@ -1,0 +1,51 @@
+@import './foundation.scss';
+
+@include foundation-everything;
+
+.fader {
+	margin: $global-margin;
+	padding: $global-padding;
+}
+
+.artist {
+	font-size: $global-font-size * 0.8;
+}
+
+.row.search-result {
+	border: 1px solid $medium-gray;
+	padding: $global-padding;
+	margin: 1rem;
+}
+
+.queue-buttons {
+	padding-top: $global-padding;
+}
+
+.mixer {
+}
+
+.search-results {
+	height: 500px;
+	overflow-y: scroll;
+}
+
+.deck {
+	padding: $global-padding;
+}
+
+.tracks {
+	height: 350px;
+	overflow-y: scroll;
+}
+
+.row.track {
+	@extend .row.search-result
+}
+
+.track-buttons {
+	@extend .queue-buttons
+}
+
+iframe {
+	height: 300px;
+}

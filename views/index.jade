@@ -1,12 +1,11 @@
 html(ng-app="Cloudfader")
 	head
 		title Cloudfader
-		link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.1.2/foundation.min.css")
-		link(rel="stylesheet", href="/css/style.css")
+		link(rel="stylesheet", href="css/cloudfader.css")
 		script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js")
 		script(src="angularjs-slider/dist/rzslider.min.js")
-		script(src="js/controllers.js")
-		link(rel="stylesheet", href="angularjs-slider/dist/rzslider.min.css")
+		script(src="js/cloudfader.js")
+		link(rel="stylesheet", href="css/rzslider.css")
 		script(src="https://w.soundcloud.com/player/api.js")
 		script(src='https://connect.soundcloud.com/sdk/sdk-3.0.0.js')
 		script(src="https://w.soundcloud.com/player/api.js")
@@ -17,66 +16,72 @@ html(ng-app="Cloudfader")
 	body(ng-controller="CloudfaderController")
 		.row
 			h1 Cloudfader
+			a(href="http://soundcloud.com" target="_blank")
+				img(src="img/soundcloud_logo.png")
 
-		//- Deck A
 		.row
-			.small-4.columns#deck-a
+			//- Deck A
+			.small-4.columns.deck#deck-a
 				.row
 					div#a-widget(ng-bind-html="deckA.html | sanitize")
 				.row 
-					p Queue
-				.row.queue(ng-repeat="track in deckA.queue")
-					.small-4.columns
-						img(ng-src="{{track.artwork_url}}")
-					.small-4.columns
-						p {{track.title}}
-					.small-4.columns
-						a(ng-click="removeFromQueue(deckA, track)") Remove
-				form(ng-submit="search(deckA, queryA)").search-form
-					.row
-						.input-group
-							input.input-group-field(type="text", ng-model='queryA', name='queryA', placeholder='Search Soundcloud...')
-							.input-group-button
-								input(type="submit", class="button", value="Search")
-				.row.search-results
-					p Results
-					.row(ng-repeat="result in deckA.searchResults")
-						.small-8.columns
-							p {{result.title}} 
-						.small-4.columns
-							a(ng-click="addToQueue(deckA, result)") Add
+					h4 A Deck
+				.tracks.row
+					.row.track(ng-repeat="track in deckA.queue")
+						.row.track-info
+							.small-4.columns
+								img(ng-src="{{track.artwork_url}}")
+							.small-8.columns
+								.artist {{track.user.username}}
+								.title {{track.title}}
+						.row.track-buttons
+							.small-6.columns
+								a.float-left(ng-click="removeFromQueue(deckA, track)") Remove
+							.small-6.columns
+								a.float-right(ng-click="play(deckA, track)") Play
 
 			//- Fader
-			.small-4.columns.fader
-				.row
+			.small-4.columns.mixer
+				.row.fader
 					.small-10.small-offset-1
 						rzslider(rz-slider-model='fader.value', rz-slider-options='fader.options')
+				.row.search
+						form(ng-submit="search(query)").small-10.small-offset-1
+							.row
+								.input-group
+									input.input-group-field(type="text", ng-model='query', name='query', placeholder='Search SoundCloud')
+									.input-group-button
+										input.button.hollow(type="submit", value="Search", ng-click="search(query)")
+					.search-results
+						.row.search-result(ng-repeat="result in searchResults")
+							.row.track-info
+								.small-4.columns
+									img(ng-src="{{result.artwork_url}}")
+								.small-8.columns.float-left
+									.artist {{result.user.username}}
+									.title {{result.title}}
+							.row.queue-buttons
+								.small-6.columns
+									a.float-left(ng-click="addToQueue(deckA, result)") A Deck
+								.small-6.columns
+									a.float-right(ng-click="addToQueue(deckB, result)") B Deck
 
 			//- Deck B
-			.small-4.columns#deck-b
+			.small-4.columns.deck#deck-b
 				.row
 					div#b-widget(ng-bind-html="deckB.html | sanitize")
 				.row 
-					p Queue
-				.row.queue(ng-repeat="track in deckB.queue")
-					.small-4.columns
-						img(ng-src="{{track.artwork_url}}")
-					.small-6.columns
-						p {{track.title}}
-					.small-2.columns
-						a(ng-click="removeFromQueue(deckB, track)") Remove
-				form(ng-submit="search(deckB, queryB)").search-form
-					.row
-						.input-group
-							input.input-group-field(type="text", ng-model='queryB', name='queryB', placeholder='Search Soundcloud...')
-							.input-group-button
-								input(type="submit", class="button", value="Search")
-				.row.search-results
-					p Results
-					.row(ng-repeat="result in deckB.searchResults")
-						.small-8.columns
-							p {{result.title}} 
-						.small-4.columns
-							a(ng-click="addToQueue(deckB, result)") Add
-
-
+					h4 B Deck
+				.tracks
+					.row.track(ng-repeat="track in deckB.queue")
+						.row.track-info
+							.small-4.columns
+								img(ng-src="{{track.artwork_url}}")
+							.small-8.columns
+								.artist {{track.user.username}}
+								.title {{track.title}}
+						.row.track-buttons
+							.small-6.columns
+								a.float-left(ng-click="removeFromQueue(deckB, track)") Remove
+							.small-6.columns
+								a.float-right(ng-click="play(deckB, track)") Play
